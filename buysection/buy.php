@@ -64,6 +64,7 @@
 <body>
 
 <?php include("../includes/header.html"); ?>
+<?php include("../includes/db.php"); ?>
 
 <div class="container">
   <h1 class="section-title">Buy Your Dream Classic</h1>
@@ -103,63 +104,70 @@
     </form>
   </div>
 
+  <?php
+  $model = isset($_GET['model']) ? $_GET['model'] : null;
+  $year = isset($_GET['year']) ? $_GET['year'] : null;
+  $search = isset($_GET['search']) ? strtolower(trim($_GET['search'])) : '';
+
+  $sql = "SELECT * FROM cars WHERE status = 'Buyable'";
+  $params = [];
+  $types = "";
+
+  if ($model) {
+    $sql .= " AND brand = ?";
+    $params[] = $model;
+    $types .= "s";
+  }
+  if ($year) {
+    $sql .= " AND year LIKE ?";
+    $params[] = "%" . substr($year, 0, 3) . "%";
+    $types .= "s";
+  }
+  if ($search) {
+    $sql .= " AND (LOWER(name) LIKE ? OR year LIKE ?)";
+    $params[] = "%$search%";
+    $params[] = "%$search%";
+    $types .= "ss";
+  }
+
+  $stmt = $conn->prepare($sql);
+  if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+  }
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  $cars = [];
+  while ($row = $result->fetch_assoc()) {
+    $cars[] = $row;
+  }
+
+  $stmt->close();
+  $conn->close();
+
+  $section = isset($_GET['section']) ? (int)$_GET['section'] : 1;
+  $perPage = 6;
+  $start = ($section - 1) * $perPage;
+  $visibleCars = array_slice($cars, $start, $perPage);
+  ?>
+
   <div class="row g-4">
-    <?php 
-    $cars = [ ['name'=>"Porsche 911", "1963", "img4.jpg", "Buyable", "Porsche", "$101,000"], 
-      ["Chevrolet El Camino SS", "1970", "img5.jpg", "Buyable", "Chevrolet", "$33,000"],   
-      ["Chevrolet Corvette", "1963", "img10.jpg", "Buyable", "Chevrolet", "$80,000"],      
-      ["BMW CSL", "1972", "img16.jpg", "Buyable", "BMW", "$216,000"],   
-      ["Ford Thunderbird", "1971", "img13.jpg", "Buyable", "Ford", "$50,000"],
-      ["Oldsmobile Starfire", "1962", "img6.jpg", "Buyable", "Oldsmobile", "$26,400"],
-      ["British Corporation Mini", "1959", "img7.jpg", "Buyable", "Mini", "$31,000"],
-      ["Jaguar XJS", "1989", "img14.jpg", "Buyable", "Jaguar", "$20,000"],
-      ["Dodge Viper", "1991", "img15.jpg", "Buyable", "Dodge", "$60,000"],
-      ["De Tomaso Pantera", "1970", "img17.jpg", "Buyable", "De Tomaso", "$125,000"],
-      ["Land Rover", "1948", "img19.jpg", "Buyable", "Land Rover", "$169,000"],
-      ["Volkswagen Beetle", "1938", "img20.jpg", "Buyable", "Volkswagen", "$18,000"],
-      ["Chevrolet Bel-Air", "1957", "img23.jpg", "Buyable", "Chevrolet", "$75,000"]
-     
-  
-    ];
-    
-
-      $search = isset($_GET['search']) ? strtolower(trim($_GET['search'])) : '';
-
-      if ($search !== '') {
-        $cars = array_filter($cars, function ($car) use ($search) {
-          return strpos(strtolower($car[0]), $search) !== false || strpos($car[1], $search) !== false;
-        });
-        $cars = array_values($cars);
-      }
-
-      $section = isset($_GET['section']) ? (int)$_GET['section'] : 1;
-      $perPage = 6;
-      $start = ($section - 1) * $perPage;
-
-      $visibleCars = array_slice($cars, $start, $perPage);
-
-      foreach ($visibleCars as $car) {
-        if ($car[3] === "Buyable") {
-          $slug = strtolower(str_replace([' ', '-', '(', ')'], '', $car[0])); // e.g. Porsche 911 → porsche911
-          echo '<div class="col-md-4">
-          <div class="car-card">
-            <a href="../car-details/' . strtolower(str_replace([" ", "-", ".", "/"], "", $car[0])) . '.php">
-              <img src="../Images/' . $car[2] . '" alt="' . $car[0] . '">
-            </a>
-            <div class="car-card-body">
-              <span class="badge bg-success badge-buyable mb-2">Buyable</span>
-              <h5 class="car-title">' . $car[0] . '</h5>
-              <p class="car-year">' . $car[1] . '</p>
-              <p class="car-info"><strong>Brand:</strong> ' . $car[4] . '</p>
-              <p class="car-info"><strong>Current sale value:</strong> ' . $car[5] . '</p>
-            </div>
+    <?php foreach ($visibleCars as $car): ?>
+      <div class="col-md-4">
+        <div class="car-card">
+          <a href="../car-details.php?car=<?php echo urlencode($car['slug']); ?>">
+            <img src="../Images/<?php echo $car['image']; ?>" alt="<?php echo $car['name']; ?>">
+          </a>
+          <div class="car-card-body">
+            <span class="badge bg-success badge-buyable mb-2">Buyable</span>
+            <h5 class="car-title"><?php echo $car['name']; ?></h5>
+            <p class="car-year"><?php echo $car['year']; ?></p>
+            <p class="car-info"><strong>Brand:</strong> <?php echo $car['brand']; ?></p>
+            <p class="car-info"><strong>Current sale value:</strong> <?php echo $car['price']; ?></p>
           </div>
-        </div>';
-  
-          
-        }
-      }
-    ?>
+        </div>
+      </div>
+    <?php endforeach; ?>
   </div>
 
   <div class="text-center my-4">
