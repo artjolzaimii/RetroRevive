@@ -1,0 +1,43 @@
+car_id,price,conditions,location,contact_email,exterior_color,interior_color,transmission,mileage,title_status,restoration_status,air_conditioning,power_steering,power_brakes,engine_condition
+1,27719,99,"Miami, FL",seller287@example.com,Silver,Gray,Automatic,45825,Rebuilt,Fully Restored,No,Yes,No,Excellent
+1,70146,89,"Chicago, IL",seller881@example.com,Red,Black,Manual,16015,Rebuilt,Fully Restored,No,No,No,Used
+1,125122,88,"Los Angeles, CA",seller219@example.com,Silver,Gray,Automatic,7678,Clean,Original,Yes,No,Yes,Excellent
+2,94015,96,"Houston, TX",seller594@example.com,Silver,Gray,Automatic,44536,Rebuilt,Fully Restored,Yes,No,Yes,Excellent
+2,144778,96,"New York, NY",seller360@example.com,Green,Beige,Manual,2068,Clean,Fully Restored,Yes,No,No,Excellent
+2,48229,92,"Chicago, IL",seller823@example.com,Black,White,Automatic,35356,Rebuilt,Fully Restored,Yes,No,Yes,Excellent
+3,112654,85,"Los Angeles, CA",seller428@example.com,Green,Beige,Manual,21454,Clean,Original,Yes,No,Yes,Excellent
+3,90377,85,"Houston, TX",seller878@example.com,Yellow,Brown,Automatic,28090,Clear,Fully Restored,No,No,Yes,Used
+3,111124,96,"Los Angeles, CA",seller643@example.com,White,Red,Automatic,43933,Clean,Fully Restored,Yes,No,Yes,Excellent
+4,104836,94,"New York, NY",seller203@example.com,Silver,Gray,Automatic,5172,Clear,Fully Restored,Yes,No,Yes,Running
+4,104229,93,"New York, NY",seller783@example.com,Blue,Tan,Automatic,19442,Clean,Original,No,No,Yes,Running
+4,51844,82,"Chicago, IL",seller768@example.com,Black,White,Automatic,24820,Rebuilt,Fully Restored,No,Yes,Yes,Running
+5,109452,83,"Miami, FL",seller634@example.com,White,Red,Automatic,21678,Clear,Original,Yes,No,No,Running
+5,36634,81,"Miami, FL",seller290@example.com,White,Red,Manual,27728,Clear,Fully Restored,Yes,No,Yes,Used
+5,122659,97,"Los Angeles, CA",seller719@example.com,Yellow,Brown,Automatic,3563,Clean,Original,Yes,Yes,No,Excellent
+6,122920,100,"New York, NY",seller276@example.com,Yellow,Brown,Automatic,49861,Clean,Fully Restored,Yes,Yes,Yes,Running
+6,31420,97,"Miami, FL",seller760@example.com,Blue,Tan,Manual,8099,Clear,Original,No,No,Yes,Excellent
+6,40297,89,"Los Angeles, CA",seller975@example.com,Green,Beige,Manual,48345,Clear,Fully Restored,Yes,Yes,No,Excellent
+7,57100,92,"Miami, FL",seller587@example.com,Black,White,Manual,47077,Clean,Restored,No,Yes,No,Excellent
+7,22572,96,"Miami, FL",seller550@example.com,White,Red,Manual,41004,Clean,Fully Restored,Yes,No,No,Used
+7,59757,87,"Houston, TX",seller463@example.com,Black,White,Automatic,34099,Clear,Restored,No,No,No,Used
+8,70871,88,"Chicago, IL",seller336@example.com,Silver,Gray,Manual,44477,Rebuilt,Original,No,Yes,Yes,Running
+8,68592,82,"Miami, FL",seller866@example.com,Blue,Tan,Manual,29144,Clean,Original,No,Yes,No,Used
+8,60494,93,"Houston, TX",seller253@example.com,Red,Black,Automatic,26513,Clear,Restored,No,Yes,No,Running
+9,32986,83,"Miami, FL",seller333@example.com,Blue,Tan,Manual,12113,Clean,Restored,No,Yes,No,Used
+9,113051,86,"New York, NY",seller523@example.com,Red,Black,Automatic,24508,Clean,Fully Restored,Yes,No,Yes,Excellent
+9,60454,90,"Chicago, IL",seller124@example.com,Red,Black,Manual,29920,Clean,Restored,Yes,No,Yes,Running
+10,78799,83,"Houston, TX",seller106@example.com,Silver,Gray,Manual,47894,Clean,Restored,No,No,No,Running
+10,146655,95,"Chicago, IL",seller221@example.com,White,Red,Automatic,13923,Clean,Original,No,No,Yes,Excellent
+10,124460,84,"Chicago, IL",seller869@example.com,Red,Black,Manual,48940,Clean,Restored,No,No,No,Running
+11,24443,88,"Chicago, IL",seller756@example.com,White,Red,Manual,10751,Clean,Fully Restored,Yes,No,No,Running
+11,73009,94,"Houston, TX",seller178@example.com,Blue,Tan,Automatic,21009,Rebuilt,Original,No,Yes,Yes,Excellent
+11,66719,92,"Houston, TX",seller422@example.com,Silver,Gray,Manual,25136,Clear,Fully Restored,No,No,Yes,Excellent
+12,125038,82,"Chicago, IL",seller512@example.com,Blue,Tan,Automatic,37642,Clear,Fully Restored,No,No,Yes,Excellent
+12,120584,95,"Los Angeles, CA",seller994@example.com,Silver,Gray,Automatic,44989,Rebuilt,Original,No,Yes,Yes,Excellent
+12,66507,84,"New York, NY",seller413@example.com,Blue,Tan,Manual,12770,Rebuilt,Original,No,Yes,No,Running
+13,143993,96,"Miami, FL",seller856@example.com,Blue,Tan,Manual,39132,Rebuilt,Fully Restored,No,Yes,Yes,Running
+13,95195,80,"New York, NY",seller937@example.com,Black,White,Manual,46702,Rebuilt,Restored,Yes,Yes,No,Used
+13,48065,97,"Los Angeles, CA",seller588@example.com,Yellow,Brown,Automatic,12716,Clear,Fully Restored,Yes,Yes,Yes,Excellent
+14,97773,89,"New York, NY",seller849@example.com,Silver,Gray,Manual,48237,Clear,Restored,Yes,No,Yes,Running
+14,146253,84,"Houston, TX",seller305@example.com,Blue,Tan,Manual,49263,Clean,Fully Restored,No,No,No,Used
+14,96273,89,"Chicago, IL",seller575@example.com,Red,Black,Manual,4075,Clear,Restored,No,Yes,Yes,Used

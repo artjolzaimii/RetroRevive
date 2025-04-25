@@ -23,6 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_search'])) {
             <td>' . $row['conditions'] . '%</td>
             <td>' . $row['location'] . '</td>
             <td>' . $row['contact_email'] . '</td>
+            <td>' . $row['exterior_color'] . '</td>
+            <td>' . $row['interior_color'] . '</td>
+            <td>' . $row['transmission'] . '</td>
+            <td>' . $row['mileage'] . '</td>
+            <td>' . $row['title_status'] . '</td>
+            <td>' . $row['restoration_status'] . '</td>
+            <td>' . ucfirst($row['engine_condition']) . '</td>
+            <td>' . ($row['air_conditioning'] === 'Yes' ? '✔️' : '❌') . '</td>
+            <td>' . ($row['power_steering'] === 'Yes' ? '✔️' : '❌') . '</td>
+            <td>' . ($row['power_brakes'] === 'Yes' ? '✔️' : '❌') . '</td>
             <td>
                 <a href="edit-listing.php?id=' . $row['id'] . '" class="btn btn-sm btn-warning">Edit</a>
                 <a href="delete-listing.php?id=' . $row['id'] . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</a>
@@ -56,25 +66,45 @@ $result = $stmt->get_result();
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search by car name...">
 
     <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
-        <thead class="table-dark">
+      <table class="table table-striped table-hover align-middle table-bordered">
+        <thead class="table-dark text-center">
           <tr>
             <th>Car</th>
             <th>Price</th>
             <th>Condition</th>
             <th>Location</th>
             <th>Contact</th>
+            <th>Exterior</th>
+            <th>Interior</th>
+            <th>Transmission</th>
+            <th>Mileage</th>
+            <th>Title</th>
+            <th>Restoration</th>
+            <th>Engine</th>
+            <th>AC</th>
+            <th>Steering</th>
+            <th>Brakes</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody id="listingsContainer">
           <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
+            <tr class="text-center">
               <td><?= htmlspecialchars($row['car_name']) ?></td>
               <td><?= $row['price'] ?></td>
               <td><?= $row['conditions'] ?>%</td>
               <td><?= $row['location'] ?></td>
               <td><?= $row['contact_email'] ?></td>
+              <td><?= $row['exterior_color'] ?></td>
+              <td><?= $row['interior_color'] ?></td>
+              <td><?= $row['transmission'] ?></td>
+              <td><?= $row['mileage'] ?></td>
+              <td><?= $row['title_status'] ?></td>
+              <td><?= $row['restoration_status'] ?></td>
+              <td><?= $row['engine_condition'] ?></td>
+              <td><?= $row['air_conditioning'] === 'Yes' ? '✔️' : '❌' ?></td>
+              <td><?= $row['power_steering'] === 'Yes' ? '✔️' : '❌' ?></td>
+              <td><?= $row['power_brakes'] === 'Yes' ? '✔️' : '❌' ?></td>
               <td>
                 <a href="edit-listing.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">Edit</a>
                 <a href="delete-listing.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</a>

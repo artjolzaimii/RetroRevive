@@ -16,9 +16,16 @@ if ($result->num_rows === 0) {
 
 $car = $result->fetch_assoc();
 
-// Fetch listings for this car
-$stmt2 = $conn->prepare("SELECT * FROM car_listings WHERE car_id = ?");
-$stmt2->bind_param("i", $car['id']);
+// Handle price filter safely (even if min = 0)
+$min = (isset($_GET['min']) && is_numeric($_GET['min'])) ? (float)$_GET['min'] : 0;
+$max = (isset($_GET['max']) && is_numeric($_GET['max'])) ? (float)$_GET['max'] : 999999999;
+
+// Fetch listings for this car filtered by price
+$stmt2 = $conn->prepare("
+  SELECT * FROM car_listings 
+  WHERE car_id = ? AND price BETWEEN ? AND ?
+");
+$stmt2->bind_param("idd", $car['id'], $min, $max);
 $stmt2->execute();
 $listings = $stmt2->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -59,20 +66,45 @@ $conn->close();
     <!-- Listings -->
     <div class="col-md-6">
       <h4>Available Listings</h4>
+
+      <!-- Price Filter -->
+      <form method="GET" class="row g-2 mb-3">
+        <input type="hidden" name="car" value="<?= htmlspecialchars($slug) ?>">
+        <div class="col-md-5">
+          <input type="number" name="min" class="form-control" placeholder="Min Price" value="<?= htmlspecialchars($min) ?>">
+        </div>
+        <div class="col-md-5">
+          <input type="number" name="max" class="form-control" placeholder="Max Price" value="<?= $max === 999999999 ? '' : htmlspecialchars($max) ?>">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-dark w-100" type="submit">Filter</button>
+        </div>
+      </form>
+
       <?php if (count($listings) > 0): ?>
         <?php foreach ($listings as $listing): ?>
-          <div class="border rounded p-3 mb-3 bg-white shadow-sm">
+          <div class="border rounded p-3 mb-4 bg-white shadow-sm">
             <p><span class="info-label">Price:</span> <?= $listing['price'] ?></p>
             <p><span class="info-label">Location:</span> <?= $listing['location'] ?></p>
+            <p><span class="info-label">Transmission:</span> <?= $listing['transmission'] ?></p>
+            <p><span class="info-label">Mileage:</span> <?= $listing['mileage'] ?></p>
+            <p><span class="info-label">Exterior / Interior:</span> <?= $listing['exterior_color'] ?> / <?= $listing['interior_color'] ?></p>
             <p><span class="info-label">Condition:</span></p>
             <div class="condition-bar mb-2">
               <div class="condition-fill" style="width: <?= $listing['conditions'] ?>%;"></div>
             </div>
+            <p><span class="info-label">Restoration:</span> <?= $listing['restoration_status'] ?></p>
+            <p><span class="info-label">Engine:</span> <?= $listing['engine_condition'] ?></p>
+            <p>
+              <span class="info-label">AC:</span> <?= $listing['air_conditioning'] ? '✅' : '❌' ?>,
+              <span class="info-label">Steering:</span> <?= $listing['power_steering'] ? '✅' : '❌' ?>,
+              <span class="info-label">Brakes:</span> <?= $listing['power_brakes'] ? '✅' : '❌' ?>
+            </p>
             <a href="mailto:<?= $listing['contact_email'] ?>?subject=Interest in <?= $car['name'] ?>" class="btn btn-outline-primary btn-sm">Contact Seller</a>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <p class="text-muted">No listings available for this car yet.</p>
+        <p class="text-muted">No listings available for this price range.</p>
       <?php endif; ?>
     </div>
   </div>
