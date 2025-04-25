@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Hash password
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+  
 
   // Insert user (role defaults to 'customer')
   $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'customer')");

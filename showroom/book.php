@@ -1,6 +1,6 @@
 <?php
 include("../includes/db.php");
-include("../includes/header.html");
+include("../includes/header.php");
 
 // Fetch showroom cars
 $sql = "SELECT * FROM cars WHERE status = 'Showroom Only'";
@@ -92,7 +92,7 @@ $cars = $result->fetch_all(MYSQLI_ASSOC);
   </div>
 </div>
 
-<?php include("../includes/footer.html"); ?>
+<?php include("../includes/footer.php"); ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

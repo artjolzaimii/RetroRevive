@@ -67,6 +67,12 @@ body {
   width: 200px;
   text-align: center;
 }
+
+.card-boxes .box:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background-color 0.3s ease;
+}
+
 </style>
 
 </head>
@@ -80,14 +86,26 @@ body {
 <div class="background-wrapper">
   <div class="dashboard-content">
     <h1>Welcome, Artjol</h1>
-    <p>This is your dashboard where you can manage cars, listings, bookings, and users.</p>
+    <p>This is your dashboard where you can manage cars, listings, bookings, sales and users.</p>
 
     <div class="card-boxes">
-      <div class="box">Total Cars<br>--</div>
-      <div class="box">Active Listings<br>--</div>
-      <div class="box">Bookings<br>--</div>
-      <div class="box">Users<br>--</div>
-    </div>
+  <a href="cars.php" class="box text-white text-decoration-none">
+    <strong>Total Cars</strong><br>--
+  </a>
+  <a href="listings.php" class="box text-white text-decoration-none">
+    <strong>Active Listings</strong><br>--
+  </a>
+  <a href="rentals.php" class="box text-white text-decoration-none">
+    <strong>Bookings</strong><br>--
+  </a>
+  <a href="sales.php" class="box text-white text-decoration-none">
+    <strong>Sales</strong><br>--
+  </a>
+  <a href="users.php" class="box text-white text-decoration-none">
+    <strong>Users</strong><br>--
+  </a>
+</div>
+
   </div>
 </div>
 

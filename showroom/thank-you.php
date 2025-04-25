@@ -38,7 +38,7 @@
 </head>
 <body>
 
-<?php include("../includes/header.html"); ?>
+<?php include("../includes/header.php"); ?>
 
 <div class="thank-you-box">
   <h1>Thank You!</h1>
@@ -47,7 +47,7 @@
   <a href="/RetroRevive/index.php" class="btn btn-dark mt-3">Back to Home</a>
 </div>
 
-<?php include("../includes/footer.html"); ?>
+<?php include("../includes/footer.php"); ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

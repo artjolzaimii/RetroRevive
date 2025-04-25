@@ -42,7 +42,7 @@ $conn->close();
 </head>
 <body>
 
-<?php include("includes/header.html"); ?>
+<?php include("includes/header.php"); ?>
 
 <div class="container mt-5 pt-5">
   <div class="row g-5">
@@ -78,7 +78,7 @@ $conn->close();
   </div>
 </div>
 
-<?php include("includes/footer.html"); ?>
+<?php include("includes/footer.php"); ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

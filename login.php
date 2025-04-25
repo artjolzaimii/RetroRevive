@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Generate CSRF token if not set
+if (empty($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,21 +69,26 @@
 </head>
 <body>
 
-  <?php include 'includes/header.html'; ?>
+  <?php include 'includes/header.php'; ?>
 
   <div class="main-content">
     <div class="login-container">
       <h3 class="text-center mb-4">RetroRevive Login</h3>
       <form action="handle-login.php" method="POST">
         <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" name="email" id="email" required>
+       
+          <label for="email" class="form-label">Email or Username</label>
+          <input type="text" class="form-control" name="email" id="email" required>
+   
         </div>
 
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" id="password" required>
         </div>
+
+        <!-- CSRF Token -->
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 
         <button type="submit" class="btn btn-dark w-100">Login</button>
 
@@ -85,7 +99,7 @@
     </div>
   </div>
 
-  <?php include("includes/footer.html"); ?>
+  <?php include("includes/footer.php"); ?>
 
 </body>
 </html>

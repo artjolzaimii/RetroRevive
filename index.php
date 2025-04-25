@@ -72,11 +72,11 @@
 </head>
 <body>
 
-<?php include("includes/header.html"); ?>
+<?php include("includes/header.php"); ?>
 
 <!-- HERO SECTION -->
 <header class="hero">
-  <div class="hero-overlay"></div> <!-- ✅ Added overlay -->
+  <div class="hero-overlay"></div>
   <div class="hero-content text-center">
     <h1 class="display-3 fw-bold">RetroRevive</h1>
     <p class="lead">Where timeless classics meet modern passion</p>
@@ -119,7 +119,7 @@
   </div>
 </section>
 
-<?php include("includes/footer.html"); ?>
+<?php include("includes/footer.php"); ?>
 
 <!-- Bootstrap Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

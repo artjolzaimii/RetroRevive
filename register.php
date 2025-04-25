@@ -61,7 +61,7 @@
 </head>
 <body>
 
-  <?php include 'includes/header.html'; ?>
+  <?php include 'includes/header.php'; ?>
 
   <div class="main-content">
     <div class="register-container">
@@ -101,7 +101,7 @@
     </div>
   </div>
 
-  <?php include 'includes/footer.html'; ?>
+  <?php include 'includes/footer.php'; ?>
 
 </body>
 </html>
