@@ -1,0 +1,66 @@
+<?php
+include 'includes/admin-header.php';
+
+include '../includes/db.php';
+
+$id = $_GET['id'] ?? null;
+if (!$id) die("No listing ID provided.");
+
+$stmt = $conn->prepare("SELECT * FROM car_listings WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$listing = $result->fetch_assoc();
+$stmt->close();
+
+$cars = $conn->query("SELECT id, name FROM cars");
+?>
+
+<div class="container my-5">
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="mb-4">Edit Listing</h2>
+    <form action="handle-edit-listing.php" method="POST">
+      <input type="hidden" name="id" value="<?= $listing['id'] ?>">
+
+      <div class="mb-3">
+        <label class="form-label">Select Car</label>
+        <select class="form-select" name="car_id" required>
+          <?php while ($car = $cars->fetch_assoc()): ?>
+            <option value="<?= $car['id'] ?>" <?= $car['id'] == $listing['car_id'] ? 'selected' : '' ?>>
+              <?= htmlspecialchars($car['name']) ?>
+            </option>
+          <?php endwhile; ?>
+        </select>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Price</label>
+          <input type="text" class="form-control" name="price" value="<?= $listing['price'] ?>" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Condition (0-100%)</label>
+          <input type="number" class="form-control" name="condition" min="0" max="100" value="<?= $listing['conditions'] ?>" required>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" name="location" value="<?= $listing['location'] ?>" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Contact Email</label>
+          <input type="email" class="form-control" name="contact_email" value="<?= $listing['contact_email'] ?>" required>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary">Update Listing</button>
+        <a href="listings.php" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<?php include 'includes/admin-footer.php'; ?>

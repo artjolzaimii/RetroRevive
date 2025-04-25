@@ -4,6 +4,13 @@ body {
     padding: 0;
     background-color: #f4f4f4;
   }
+  footer {
+    background-color: #1e1e1e;
+    color: #ccc;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
   
   /* Hero Section */
   .hero {
