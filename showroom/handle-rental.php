@@ -21,6 +21,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("End date must be after start date.");
     }
 
+    // Check for overlapping bookings
+    $overlapStmt = $conn->prepare("
+        SELECT COUNT(*) FROM rentals
+        WHERE car_id = ?
+          AND start_date <= ?
+          AND end_date >= ?
+    ");
+    $overlapStmt->bind_param("iss", $car_id, $end_date, $start_date);
+    $overlapStmt->execute();
+    $overlapStmt->bind_result($overlapCount);
+    $overlapStmt->fetch();
+    $overlapStmt->close();
+
+   if ($overlapCount > 0) {
+    header("Location: book.php?error=1");
+    exit();
+}
+
+
     // Get car daily rate
     $stmt = $conn->prepare("SELECT daily_rate FROM cars WHERE id = ?");
     $stmt->bind_param("i", $car_id);
@@ -34,19 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $total_price = $car['daily_rate'] * $days;
 
-    var_dump($user_id, $car_id, $start_date, $end_date, $total_price);
-
-
-    // Insert into rentals table
-    $insert = $conn->prepare("INSERT INTO rentals (user_id, car_id, start_date, end_date, total_price) VALUES (?, ?, ?, ?, ?)");
-
-
-
-    if (!$insert) {
-        die("Prepare failed: " . $conn->error);
-    }
-    
-    $insert->bind_param("iisss", $user_id, $car_id, $start_date, $end_date, $total_price);
+    // Insert new rental
+    $insert = $conn->prepare("
+        INSERT INTO rentals (user_id, car_id, start_date, end_date, total_price)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+    $insert->bind_param("iissd", $user_id, $car_id, $start_date, $end_date, $total_price);
 
     if ($insert->execute()) {
         header("Location: thank-you.php");

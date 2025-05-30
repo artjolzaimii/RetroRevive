@@ -9,8 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Get user info
-$stmt = $conn->prepare("SELECT username, email FROM users WHERE id = ?");
+// Get user info, including profile picture
+$stmt = $conn->prepare("SELECT username, email, profile_picture FROM users WHERE id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -34,14 +34,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_info'])) {
   }
 }
 
-// Fetch transactions
-$sales = $conn->query("
-  SELECT sales.*, cars.name AS car_name 
-  FROM sales 
-  JOIN cars ON sales.car_id = cars.id 
-  WHERE sales.user_id = $user_id
-");
+// Handle profile picture upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_picture'])) {
+  if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === UPLOAD_ERR_OK) {
+    $imgTmp = $_FILES['profile_picture']['tmp_name'];
+    $imgName = basename($_FILES['profile_picture']['name']);
+    $imgPath = 'Images/profile_' . $user_id . '_' . time() . '_' . $imgName;
+    move_uploaded_file($imgTmp, $imgPath);
 
+    $updatePicStmt = $conn->prepare("UPDATE users SET profile_picture = ? WHERE id = ?");
+    $updatePicStmt->bind_param("si", $imgPath, $user_id);
+    $updatePicStmt->execute();
+    $updatePicStmt->close();
+
+    header("Location: profile.php");
+    exit();
+  }
+}
+
+// Rental history
 $rentals = $conn->query("
   SELECT rentals.*, cars.name AS car_name 
   FROM rentals 
@@ -49,6 +60,8 @@ $rentals = $conn->query("
   WHERE rentals.user_id = $user_id
 ");
 
+// Determine which profile picture to show
+$profilePic = !empty($user['profile_picture']) ? $user['profile_picture'] : '/RetroRevive/Images/profile.png';
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +87,12 @@ $rentals = $conn->query("
       width: 120px;
       height: 120px;
       border-radius: 50%;
+      border: 4px solid #1c1c1c;
       object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .profile-img:hover {
+      transform: scale(1.05);
     }
   </style>
 </head>
@@ -87,9 +105,18 @@ $rentals = $conn->query("
 
   <!-- Profile Picture Display -->
   <div class="mb-4">
-  <img src="/RetroRevive/Images/profile.png" alt="Profile Picture" class="profile-img mb-2">
-
+    <img src="<?= htmlspecialchars($profilePic) ?>" alt="Profile Picture" class="profile-img mb-2">
   </div>
+
+  <!-- Profile Picture Upload -->
+  <form method="POST" enctype="multipart/form-data" class="mb-4">
+    <input type="hidden" name="update_picture" value="1">
+    <div class="mb-3">
+      <label for="profilePicture" class="form-label">Update Profile Picture:</label>
+      <input type="file" class="form-control" name="profile_picture" id="profilePicture" accept="image/*">
+    </div>
+    <button class="btn btn-outline-dark" type="submit">Upload</button>
+  </form>
 
   <!-- Profile Info Update -->
   <form method="POST" class="mb-5">
@@ -105,35 +132,12 @@ $rentals = $conn->query("
     <button class="btn btn-outline-dark" type="submit">Update Info</button>
   </form>
 
-  <!-- Purchase History -->
-  <h4 class="text-start mt-5 mb-3">Purchase History</h4>
-  <table class="table table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>Car ID</th>
-        <th>Date</th>
-        <th>Amount</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if ($sales && $sales->num_rows > 0): while ($row = $sales->fetch_assoc()): ?>
-        <tr>
-        <td><?= htmlspecialchars($row['car_name']) ?></td>
-          <td><?= $row['purchase_date'] ?></td>
-          <td><?= $row['amount'] ?></td>
-        </tr>
-      <?php endwhile; else: ?>
-        <tr><td colspan="3">No purchases found.</td></tr>
-      <?php endif; ?>
-    </tbody>
-  </table>
-
   <!-- Rental History -->
   <h4 class="text-start mt-5 mb-3">Rental History</h4>
   <table class="table table-bordered">
     <thead class="table-dark">
       <tr>
-        <th>Car ID</th>
+        <th>Car</th>
         <th>From</th>
         <th>To</th>
         <th>Total Price</th>
@@ -142,7 +146,7 @@ $rentals = $conn->query("
     <tbody>
       <?php if ($rentals && $rentals->num_rows > 0): while ($row = $rentals->fetch_assoc()): ?>
         <tr>
-        <td><?= htmlspecialchars($row['car_name']) ?></td>
+          <td><?= htmlspecialchars($row['car_name']) ?></td>
           <td><?= $row['start_date'] ?></td>
           <td><?= $row['end_date'] ?></td>
           <td><?= $row['total_price'] ?></td>

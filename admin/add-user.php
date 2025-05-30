@@ -4,7 +4,7 @@ include 'includes/admin-header.php';
 include '../includes/db.php';
 
 // Restrict access to admins only
-if ($_SESSION['role'] !== 'admin') {
+if ($_SESSION['role'] !== 'Admin') {
     die("Access denied.");
 }
 

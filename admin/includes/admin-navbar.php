@@ -18,9 +18,14 @@
         <li class="nav-item"><a class="nav-link" href="cars.php">Cars</a></li>
         <li class="nav-item"><a class="nav-link" href="listings.php">Listings</a></li>
         <li class="nav-item"><a class="nav-link" href="rentals.php">Rentals</a></li>
-        <li class="nav-item"><a class="nav-link" href="sales.php">Sales</a></li>
         <li class="nav-item"><a class="nav-link" href="users.php">Users</a></li>
-        <li class="nav-item"><a class="nav-link text-danger" href="../logout.php">Logout</a></li>
+        <div class="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Admin</a>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+    <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
+  </ul>
+</div>
       </ul>
     </div>
   </div>

@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_search'])) {
                 <td>' . $row['id'] . '</td>
                 <td>' . htmlspecialchars($row['username']) . '</td>
                 <td>' . htmlspecialchars($row['email']) . '</td>
-                <td><span class="badge bg-' . ($row['role'] === 'admin' ? 'primary' : 'secondary') . '">' . ucfirst($row['role']) . '</span></td>
+                <td><span class="badge bg-' . ($row['role'] === 'Admin' ? 'primary' : 'secondary') . '">' . ucfirst($row['role']) . '</span></td>
                 <td>';
-        if ($current_user_role === 'admin') {
+        if ($current_user_role === 'Admin') {
             echo '<a href="edit-user.php?id=' . $row['id'] . '" class="btn btn-sm btn-warning">Edit</a>
                   <a href="delete-user.php?id=' . $row['id'] . '" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure?\')">Delete</a>';
         } else {
@@ -42,7 +42,7 @@ $result = $conn->query("SELECT * FROM users ORDER BY id DESC");
   <div class="bg-white p-4 rounded shadow">
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2 class="mb-0">User Management</h2>
-      <?php if ($current_user_role === 'admin'): ?>
+      <?php if ($current_user_role === 'Admin'): ?>
         <a href="add-user.php" class="btn btn-success">+ Add New User</a>
       <?php endif; ?>
     </div>
@@ -66,9 +66,9 @@ $result = $conn->query("SELECT * FROM users ORDER BY id DESC");
               <td><?= $row['id'] ?></td>
               <td><?= htmlspecialchars($row['username']) ?></td>
               <td><?= htmlspecialchars($row['email']) ?></td>
-              <td><span class="badge bg-<?= $row['role'] === 'admin' ? 'primary' : 'secondary' ?>"><?= ucfirst($row['role']) ?></span></td>
+              <td><span class="badge bg-<?= $row['role'] === 'Admin' ? 'primary' : 'secondary' ?>"><?= ucfirst($row['role']) ?></span></td>
               <td>
-                <?php if ($current_user_role === 'admin'): ?>
+                <?php if ($current_user_role === 'Admin'): ?>
                   <a href="edit-user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning">Edit</a>
                   <a href="delete-user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
                 <?php else: ?>

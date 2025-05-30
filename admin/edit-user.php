@@ -10,14 +10,26 @@ $user_id = intval($_GET['id']);
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $new_username = trim($_POST['username']);
+    $new_email = trim($_POST['email']);
     $new_role = $_POST['role'];
 
-    if ($new_role !== 'admin' && $new_role !== 'customer') {
+    // Basic validation
+    if (empty($new_username) || empty($new_email) || empty($new_role)) {
+        die("All fields are required.");
+    }
+
+    if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format.");
+    }
+
+    if ($new_role !== 'Admin' && $new_role !== 'Customer') {
         die("Invalid role selected.");
     }
 
-    $update_stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
-    $update_stmt->bind_param("si", $new_role, $user_id);
+    // Update the user in the database
+    $update_stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, role = ? WHERE id = ?");
+    $update_stmt->bind_param("sssi", $new_username, $new_email, $new_role, $user_id);
 
     if ($update_stmt->execute()) {
         header("Location: users.php?updated=1");
@@ -45,19 +57,19 @@ if (!$user) {
     <form method="POST" class="mt-4">
       <div class="mb-3">
         <label class="form-label">Username</label>
-        <input type="text" class="form-control" value="<?= htmlspecialchars($user['username']) ?>" disabled>
+        <input type="text" class="form-control" name="username" value="<?= htmlspecialchars($user['username']) ?>" required>
       </div>
 
       <div class="mb-3">
         <label class="form-label">Email</label>
-        <input type="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" disabled>
+        <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($user['email']) ?>" required>
       </div>
 
       <div class="mb-3">
         <label for="role" class="form-label">Role</label>
-        <select class="form-select" name="role" id="role">
-          <option value="customer" <?= $user['role'] === 'customer' ? 'selected' : '' ?>>Customer</option>
-          <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+        <select class="form-select" name="role" id="role" required>
+          <option value="Customer" <?= $user['role'] === 'Customer' ? 'selected' : '' ?>>Customer</option>
+          <option value="Admin" <?= $user['role'] === 'Admin' ? 'selected' : '' ?>>Admin</option>
         </select>
       </div>
 

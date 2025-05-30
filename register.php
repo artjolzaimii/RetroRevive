@@ -13,21 +13,12 @@
     body {
       display: flex;
       flex-direction: column;
-      background: url('Images/logo-back.png') no-repeat center center fixed;
+      background: url('Images/logIn.png') no-repeat center center fixed;
       background-size: cover;
       position: relative;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 0;
-    }
+
 
   .main-content {
   flex: 1;
@@ -61,7 +52,7 @@
 </head>
 <body>
 
-  <?php include 'includes/header.php'; ?>
+ 
 
   <div class="main-content">
     <div class="register-container">
@@ -101,7 +92,7 @@
     </div>
   </div>
 
-  <?php include 'includes/footer.php'; ?>
+  
 
 </body>
 </html>

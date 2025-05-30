@@ -41,14 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
 
   // Insert user (role defaults to 'customer')
-  $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'customer')");
+  $insert_stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, 'Customer')");
   $insert_stmt->bind_param("sss", $username, $email, $hashed_password);
 
   if ($insert_stmt->execute()) {
     // Auto login or redirect to login page
     $_SESSION['user_id'] = $insert_stmt->insert_id;
     $_SESSION['username'] = $username;
-    $_SESSION['role'] = 'customer';
+    $_SESSION['role'] = 'Customer';
 
     $insert_stmt->close();
     $conn->close();

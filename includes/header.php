@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="index.php">
+    <a class="navbar-brand d-flex align-items-center" href="http://localhost/RetroRevive/index.php">
       <img src="/RetroRevive/Images/logoR.png" alt="RetroRevive Logo" width="40" height="40" class="me-2" />
       <span class="fw-bold fs-5">RetroRevive</span>
     </a>

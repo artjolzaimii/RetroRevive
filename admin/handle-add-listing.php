@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ");
 
     $stmt->bind_param(
-        "isisssssssssssss",
+        "isissssssssssss",
         $car_id, $price, $condition, $location, $contact_email,
         $exterior_color, $interior_color, $transmission, $mileage, $title_status,
         $restoration_status, $air_conditioning, $power_steering, $power_brakes, $engine_condition
