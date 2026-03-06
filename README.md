@@ -88,7 +88,7 @@ Admins can:
 ## Homepage
 
 <p align="center">
-  <img src="images/homepage.jpg" width="800">
+  <img src="images/homepage.jpeg" width="800">
 </p>
 
 ---
@@ -96,7 +96,7 @@ Admins can:
 ## Buy Cars Marketplace
 
 <p align="center">
-  <img src="images/buy-cars.jpg" width="800">
+  <img src="images/buy-cars.jpeg" width="800">
 </p>
 
 ---
@@ -104,7 +104,7 @@ Admins can:
 ## Car Details Page
 
 <p align="center">
-  <img src="images/car-details.jpg" width="800">
+  <img src="images/car-details.jpeg" width="800">
 </p>
 
 ---
@@ -112,7 +112,7 @@ Admins can:
 ## Showroom Booking
 
 <p align="center">
-  <img src="images/showroom-booking.jpg" width="800">
+  <img src="images/showroom-booking.jpeg" width="800">
 </p>
 
 ---
@@ -120,7 +120,7 @@ Admins can:
 ## User Profile
 
 <p align="center">
-  <img src="images/user-profile.jpg" width="800">
+  <img src="images/user-profile.jpeg" width="800">
 </p>
 
 ---
@@ -128,7 +128,7 @@ Admins can:
 ## Admin Dashboard
 
 <p align="center">
-  <img src="images/admin-dashboard.jpg" width="800">
+  <img src="images/admin-dashboard.jpeg" width="800">
 </p>
 
 ---
@@ -136,7 +136,7 @@ Admins can:
 ## Rental Statistics
 
 <p align="center">
-  <img src="images/rental-statistics.jpg" width="800">
+  <img src="images/rental-statistics.jpeg" width="800">
 </p>
 
 ---
